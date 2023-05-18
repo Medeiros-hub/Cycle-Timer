@@ -1,13 +1,13 @@
 import { useContext, useEffect } from "react";
 import { CountdonwContainer, Separtor } from "./styles";
-import { CyclesContext } from "..";
 import { differenceInSeconds } from "date-fns";
+import { CyclesContext } from "../../../contexts/CyclesContext";
 
 export function Countdown() {
   const {
     activeCycle,
     activeCycleId,
-    markCurrentCycleAsFineshed,
+    markCurrentCycleAsFinished,
     amountSecondsPassed,
     setSecondsPassed,
   } = useContext(CyclesContext);
@@ -30,11 +30,13 @@ export function Countdown() {
       interval = setInterval(() => {
         const secondDifference = differenceInSeconds(
           new Date(),
-          activeCycle.startDate
+          new Date(
+            activeCycle.startDate
+          )
         );
 
         if (secondDifference >= totalSeconds) {
-          markCurrentCycleAsFineshed();
+          markCurrentCycleAsFinished();
           setSecondsPassed(totalSeconds);
           clearInterval(interval);
         } else {
@@ -50,7 +52,7 @@ export function Countdown() {
     totalSeconds,
     activeCycleId,
     setSecondsPassed,
-    markCurrentCycleAsFineshed,
+    markCurrentCycleAsFinished,
   ]);
 
   // Adicionar o timer ao título da página
